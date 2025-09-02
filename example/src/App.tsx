@@ -7,6 +7,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Result: {result}</Text>
+      <Text>HOLA MUNDO</Text>
     </View>
   );
 }

@@ -47,16 +47,24 @@ yarn prepare
 
 **Important**: This is a monorepo using `react-native-monorepo-config`. All example app commands must be run from the root directory, not from the example folder.
 
+**Running the Example App**: You need to use two terminals:
+
+**Terminal 1 - Start Metro bundler:**
 ```bash
-# Run on iOS (starts Metro automatically, run from root)
+yarn example start
+```
+
+**Terminal 2 - Run the app:**
+```bash
+# For iOS
 yarn example ios
 
-# Run on Android (starts Metro automatically, run from root)
+# For Android
 yarn example android
+```
 
-# Start Metro bundler separately if needed (run from root)
-yarn example start
-
+**Build Commands:**
+```bash
 # Build iOS Debug mode (run from root)
 yarn example build:ios
 

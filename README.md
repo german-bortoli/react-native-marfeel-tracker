@@ -5,6 +5,10 @@ React Native bindings for [Marfeel CompassTracking SDK](https://community.marfee
 ## Installation
 
 ```sh
+# with npm
+npm install react-native-marfeel-tracker
+
+# or with yarn
 yarn add react-native-marfeel-tracker
 ```
 
@@ -25,6 +29,23 @@ MarfeelTracker.setUserType('logged');
 // Track UI interactions as conversions/clicks
 MarfeelTracker.trackClick('cta.primary'); // Same as trackConversion('click:cta.primary')
 ```
+
+### Using the published package
+
+1. Install the package with `npm install react-native-marfeel-tracker` (or `yarn add` as shown above).
+2. Run the native autolinking steps:
+   - Android: no extra configuration is needed beyond a regular Gradle sync.
+   - iOS: `cd ios && pod install`.
+3. Import the module from JavaScript/TypeScript:
+
+   ```ts
+   import MarfeelTracker from 'react-native-marfeel-tracker';
+
+   MarfeelTracker.initialize('YOUR_ACCOUNT_ID');
+   MarfeelTracker.trackPage('https://example.com');
+   ```
+
+4. Whenever you publish a new version to npm, make sure the `lib/` artifacts are up to date (`yarn clean && yarn prepare`) before running `npm publish --access public`.
 
 ## API
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import MarfeelTracker from 'react-native-marfeel-tracker';
 
-const ACCOUNT_ID = '10156';
+const ACCOUNT_ID = '11111';
 const HOME_URL = 'https://german.borto.li';
 
 export default function App() {

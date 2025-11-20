@@ -1,11 +1,27 @@
 buildscript {
-  ext.getExtOrDefault = {name ->
-    return rootProject.ext.has(name) ? rootProject.ext.get(name) : project.properties['MarfeelTracker_' + name]
+  ext.getExtOrDefault = { String name, Object fallback = null ->
+    if (rootProject.ext.has(name)) {
+      return rootProject.ext.get(name)
+    }
+
+    def propertyName = 'MarfeelTracker_' + name
+    if (project.hasProperty(propertyName)) {
+      return project.property(propertyName)
+    }
+
+    if (fallback != null) {
+      return fallback
+    }
+
+    throw new GradleException("Missing Gradle property: ${propertyName}")
   }
 
   repositories {
     google()
     mavenCentral()
+    maven {
+      url "https://repositories.mrf.io/nexus/repository/mvn-marfeel-public/"
+    }
   }
 
   dependencies {
@@ -21,18 +37,27 @@ apply plugin: "kotlin-android"
 
 apply plugin: "com.facebook.react"
 
-def getExtOrIntegerDefault(name) {
-  return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["MarfeelTracker_" + name]).toInteger()
+def getExtOrIntegerDefault(name, fallback = null) {
+  def value = rootProject.ext.has(name) ? rootProject.ext.get(name) : project.findProperty("MarfeelTracker_" + name)
+
+  if (value == null) {
+    if (fallback != null) {
+      return fallback
+    }
+    throw new GradleException("Missing Gradle property: MarfeelTracker_${name}")
+  }
+
+  return value.toString().toInteger()
 }
 
 android {
   namespace "com.marfeeltracker"
 
-  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion")
+  compileSdkVersion getExtOrIntegerDefault("compileSdkVersion", 35)
 
   defaultConfig {
-    minSdkVersion getExtOrIntegerDefault("minSdkVersion")
-    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion")
+    minSdkVersion getExtOrIntegerDefault("minSdkVersion", 24)
+    targetSdkVersion getExtOrIntegerDefault("targetSdkVersion", 34)
   }
 
   buildFeatures {
@@ -67,11 +92,15 @@ android {
 repositories {
   mavenCentral()
   google()
+  maven {
+    url "https://repositories.mrf.io/nexus/repository/mvn-marfeel-public/"
+  }
 }
 
-def kotlin_version = getExtOrDefault("kotlinVersion")
+def kotlin_version = getExtOrDefault("kotlinVersion", "2.0.21")
 
 dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+  implementation "com.marfeel.compass:views:1.16.2"
 }

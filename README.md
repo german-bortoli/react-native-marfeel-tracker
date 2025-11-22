@@ -12,7 +12,18 @@ npm install react-native-marfeel-tracker
 yarn add react-native-marfeel-tracker
 ```
 
-- Android: no extra Gradle setup is required—the library already ships with the Marfeel Maven repository and Compass dependency.
+- Android: make sure your `android/settings.gradle` (or `settings.gradle.kts`) lists the Marfeel repositories so Gradle can resolve the Compass artifacts:
+
+  ```
+  dependencyResolutionManagement {
+      repositories {
+          google()
+          mavenCentral()
+          maven { url = uri("https://www.jitpack.io") }
+          maven { url = uri("https://repositories.mrf.io/nexus/repository/mvn-marfeel-public/") }
+      }
+  }
+  ```
 - iOS: run `cd ios && pod install` so Cocoapods can fetch `MarfeelSDK-iOS`.
 
 ## Quick start
